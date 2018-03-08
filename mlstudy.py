@@ -1,6 +1,7 @@
 import numpy
 import requests
 import json
+from mdaio import mda_from_bytes
 
 class MLStudyScript:
     def __init__(self):
@@ -11,12 +12,14 @@ class MLStudyScript:
     def setResultsObject(self,obj):
         self._results_object=obj
     def result(self,name):
-        return self._results_object[name]
+        return self._results_object[name]['value']
 
 class MLStudy:
     _docstor_url='https://docstor1.herokuapp.com'
-    def __init__(self):
+    def __init__(self,id):
         self._study={}
+        if id:
+            self.load(id)
     def setDocStorUrl(self,url):
         self._docstor_url=url
     def load(self,id):
@@ -39,8 +42,6 @@ class MLStudy:
 
 class MLUtils:    
     def load(obj):
-        if 'value' in obj:
-            return MLUtils.load(obj['value'])
         if 'prv' in obj:
             url='https://kbucket.flatironinstitute.org/download/'+obj['prv']['original_checksum']
             req=requests.get(url)
@@ -49,3 +50,5 @@ class MLUtils:
         return MLUtils.load(obj).decode('utf-8')
     def loadJson(obj):
         return json.loads(MLUtils.loadText(obj))
+    def loadMda(obj):
+        return mda_from_bytes(MLUtils.load(obj))
