@@ -1,3 +1,5 @@
+[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/magland/notebooks/master?filepath=mlstudy.ipynb)
+
 ## MLStudy Notebook Integration (WIP)
 Providing jupyter notebooks for exploration of datasets in MLStudy.
 
